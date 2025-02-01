@@ -1,0 +1,17 @@
+{
+    // 自動保存
+    "files.autoSave": "off",
+    // フォーマッタ設定
+    "editor.formatOnSave": true,
+    "eslint.format.enable": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.associations": {
+        "*.js": "javascriptreact",
+        "*.jsx": "javascriptreact",
+        "*.ts": "typescriptreact",
+        "*.tsx": "typescriptreact"
+    },
+    "typescript.tsdk": "node_modules/typescript/lib",
+    // Markdown Preview Enhanced設定
+    "markdown-preview-enhanced.plantumlJarPath": "${workspaceFolder}\\lib\\plantuml.jar",
+}

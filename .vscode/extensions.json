@@ -1,0 +1,25 @@
+{
+    "recommendations": [
+        "amazonwebservices.aws-toolkit-vscode",
+        "alefragnani.bookmarks",
+        "streetsidesoftware.code-spell-checker",
+        "hediet.vscode-drawio",
+        "usernamehw.errorlens",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "visualstudioexptteam.vscodeintellicode",
+        "visualstudioexptteam.intellicode-api-usage-examples",
+        "visualstudioexptteam.vscodeintellicode-completions",
+        "ms-ceintl.vscode-language-pack-ja",
+        "shd101wyy.markdown-preview-enhanced",
+        "takumii.markdowntable",
+        "davidanson.vscode-markdownlint",
+        "pkief.material-icon-theme",
+        "42crunch.vscode-openapi",
+        "mushan.vscode-paste-image",
+        "esbenp.prettier-vscode",
+        "humao.rest-client",
+        "uctakeoff.vscode-counter",
+        "redhat.vscode-yaml"
+    ]
+}
