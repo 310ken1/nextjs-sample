@@ -4,13 +4,12 @@ import { Noto_Sans_JP } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 
-export const notoSansJp = Noto_Sans_JP({
+const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
   weight: ["400", "700"],
   preload: false,
   variable: "--font-noto-sans-jp",
   display: "swap",
-  fallback: ["Hiragino Sans", "Hiragino Kaku Gothic ProN", "sans-serif"],
 });
 
 /**
@@ -24,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body className={notoSansJp.className}>{children}</body>
     </html>
   );
