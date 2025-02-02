@@ -8,11 +8,11 @@ import message from "@/message.json";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const STATE = {
+const STATE = {
   list: 0,
   grid: 1,
 } as const;
-export type State = (typeof STATE)[keyof typeof STATE];
+type State = (typeof STATE)[keyof typeof STATE];
 
 /**
  * ホームページコンポーネント.
