@@ -1,6 +1,7 @@
 "use client";
 
 import { Noto_Sans_JP } from "next/font/google";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 
 export const notoSansJp = Noto_Sans_JP({
