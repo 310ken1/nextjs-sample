@@ -1,4 +1,19 @@
 .main {
+  position: relative;
   height: 100%;
   background-color: #ff000010;
+}
+
+.top {
+  position: relative;
+  top: 0;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+}
+
+.item {
+  margin: 5px;
 }
