@@ -6,6 +6,13 @@ import { Button } from "react-bootstrap";
 import styles from "./page.module.css";
 import message from "@/message.json";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export const STATE = {
+  list: 0,
+  grid: 1,
+} as const;
+export type State = (typeof STATE)[keyof typeof STATE];
 
 /**
  * ホームページコンポーネント.
@@ -13,6 +20,7 @@ import { useRouter } from "next/navigation";
  */
 export default function Home(): JSX.Element {
   const router = useRouter();
+  const [state, setState] = useState<State>(STATE.list);
   return (
     <Frame
       left={[<div key="1">{message.home.title}</div>]}
@@ -40,6 +48,16 @@ export default function Home(): JSX.Element {
             window.location.reload();
           }}
         />,
+        <Button
+          key="3"
+          className={`bi ${
+            state === STATE.list ? "bi-grid-3x3" : "bi-card-list"
+          } ${styles.button}`}
+          variant="light"
+          onClick={() => {
+            setState(state === STATE.list ? STATE.grid : STATE.list);
+          }}
+        />,
       ]}
       bottom={[
         <Button
@@ -52,7 +70,11 @@ export default function Home(): JSX.Element {
         />,
       ]}
     >
-      ホームページ
+      {state === STATE.list ? (
+        <div>リストページ</div>
+      ) : (
+        <div>グリッドページ</div>
+      )}
     </Frame>
   );
 }
