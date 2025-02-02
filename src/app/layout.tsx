@@ -12,11 +12,16 @@ export const notoSansJp = Noto_Sans_JP({
   fallback: ["Hiragino Sans", "Hiragino Kaku Gothic ProN", "sans-serif"],
 });
 
+/**
+ * ルートレイアウトコンポーネント.
+ * @param children 子要素.
+ * @returns ルートレイアウトコンポーネント.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): JSX.Element {
   return (
     <html lang="en">
       <body className={notoSansJp.className}>{children}</body>
