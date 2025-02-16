@@ -7,6 +7,8 @@ import styles from "./page.module.css";
 import message from "@/message.json";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useObservationPoints } from "@/hooks/useObservationPoints";
+import { useWeatherData } from "@/hooks/useMeteo";
 
 /**
  * ページの状態.
@@ -16,6 +18,28 @@ const STATE = {
   grid: 1,
 } as const;
 type State = (typeof STATE)[keyof typeof STATE];
+
+/**
+ * 観測地点.
+ * @property name 名前.
+ * @property latitude 緯度.
+ * @property longitude 経度.
+ */
+type Point = {
+  name: string;
+  latitude: number;
+  longitude: number;
+};
+
+/**
+ * モード.
+ * @property state 状態.
+ * @property param パラメータ.
+ */
+type Mode = {
+  state: State;
+  param: Point | undefined;
+};
 
 /**
  * サイドバーボタン.
@@ -87,37 +111,96 @@ function CustomFrame({
  */
 export default function Home(): JSX.Element {
   const router = useRouter();
-  const [state, setState] = useState<State>(STATE.list);
+  const [mode, setMode] = useState<Mode>({
+    state: STATE.list,
+    param: undefined,
+  });
+
+  const {
+    data: points,
+    error: points_error,
+    isLoading: points_isLoading,
+  } = useObservationPoints();
+  const {
+    data: history,
+    error: history_error,
+    isLoading: history_isLoading,
+  } = useWeatherData(
+    mode.param?.latitude,
+    mode.param?.longitude,
+    new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+    new Date()
+  );
+
+  const left: JSX.Element[] = [<div key="1">{message.home.title}</div>];
+  const right: JSX.Element[] = [
+    <div
+      key="1"
+      className={`bi bi-person-circle ${styles.icon}`}
+      onClick={() => alert("ユーザーアイコンクリック")}
+    />,
+  ];
 
   /* prettier-ignore */
   const topButtons : SidebarButton[] = [
-    { key: "1", icon: "bi-house", onClick: () => router.push("/") },
-    { key: "2", icon: "bi-arrow-clockwise", onClick: () => window.location.reload() },
-    { key: "3", icon: state === STATE.list ? "bi-grid-3x3" : "bi-card-list", onClick: () => setState(state === STATE.list ? STATE.grid : STATE.list) },
-  ];
+    { key: "1", icon: "bi-house", onClick: () => {
+        router.push("/")
+        setMode({ state: STATE.list, param: undefined });
+      }
+    },
+    { key: "2", icon: "bi-arrow-clockwise", onClick: () => window.location.reload() }
+ ];
 
   /* prettier-ignore */
   const bottomButtons: SidebarButton[] = [
     { key: "2", icon: "bi-gear", onClick: () => router.push("/setting") },
   ];
 
+  if (points_error) {
+    return <div>{points_error.message}</div>;
+  }
+
   return (
     <CustomFrame
-      left={[<div key="1">{message.home.title}</div>]}
-      right={[
-        <div
-          key="1"
-          className={`bi bi-person-circle ${styles.icon}`}
-          onClick={() => alert("ユーザーアイコンクリック")}
-        />,
-      ]}
+      left={left}
+      right={right}
       top={topButtons}
       bottom={bottomButtons}
     >
-      {state === STATE.list ? (
-        <div>リストページ</div>
+      {mode.state === STATE.list ? (
+        <div>
+          <h1>観測地点リスト</h1>
+          <ul>
+            {points?.map(
+              (point: {
+                name: string;
+                latitude: number;
+                longitude: number;
+              }) => (
+                <li key={point.name}>
+                  <a
+                    href="#"
+                    onClick={() => {
+                      setMode({ state: STATE.grid, param: point });
+                    }}
+                  >
+                    {point.name}
+                  </a>
+                </li>
+              )
+            )}
+          </ul>
+        </div>
       ) : (
-        <div>グリッドページ</div>
+        <div>
+          <h1>{mode.param?.name}の気温履歴</h1>
+          {history?.map((data, index) => (
+            <div key={index}>
+              {data.temperature}
+              <br />
+            </div>
+          ))}
+        </div>
       )}
     </CustomFrame>
   );

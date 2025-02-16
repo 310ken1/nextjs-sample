@@ -1,0 +1,12 @@
+# REST Clientマニュアル
+# https://github.com/Huachao/vscode-restclient
+#
+
+@hostname = 127.0.0.1
+@port = 4010
+@host = {{hostname}}:{{port}}
+
+
+### 観測地点リストの取得
+GET http://{{host}}/weather/points
+

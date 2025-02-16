@@ -3,6 +3,7 @@
 import { Noto_Sans_JP } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
@@ -11,6 +12,8 @@ const notoSansJp = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
   display: "swap",
 });
+
+export const queryClient = new QueryClient();
 
 /**
  * ルートレイアウトコンポーネント.
@@ -24,7 +27,9 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang="ja">
-      <body className={notoSansJp.className}>{children}</body>
+      <QueryClientProvider client={queryClient}>
+        <body className={notoSansJp.className}>{children}</body>
+      </QueryClientProvider>
     </html>
   );
 }
